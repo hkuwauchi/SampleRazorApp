@@ -22,12 +22,14 @@ namespace SampleRazorApp.Pages
 
         public async Task OnGetAsync()
         {
-            People = await _context.Person.ToListAsync();
+            IQueryable<Person> result = from p in _context.Person select p;
+            People = await result.ToListAsync();
         }
 
         public async Task OnPostAsync(string Find)
         {
-            People = await _context.Person.Where(c => c.Name == Find).ToListAsync();
+            IQueryable<Person> result = from p in _context.Person where p.Name == Find select p;
+            People = await result.ToListAsync();
         }
     }
 }
